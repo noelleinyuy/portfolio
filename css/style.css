@@ -1,0 +1,1775 @@
+/*
+===============================================================================
+NOEL PORTFOLIO
+TWO-THEME RESPONSIVE STYLESHEET
+===============================================================================
+
+THEMES
+------
+1. Default = Dark / Emerald Technology
+2. body.theme-light = Light / Professional
+
+FEATURES
+--------
+- Responsive desktop/tablet/mobile layout
+- Mobile navigation
+- Moon/Sun theme button
+- Persistent theme colors
+- Boxicons support
+- Animated profile image
+- Responsive testimonials
+- Responsive contact form
+- Readme page styling
+- Consistent headings and paragraphs
+
+IMPORTANT
+---------
+The JavaScript adds/removes:
+
+    body.theme-light
+
+The PHP/database code does not need to change for the theme system.
+===============================================================================
+*/
+
+
+/* ============================================================================
+   1. GLOBAL RESET
+============================================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+}
+
+
+/* ============================================================================
+   2. BOXICONS FIX
+============================================================================
+
+   This is important.
+
+   Your portfolio uses Boxicons for:
+   - Moon/Sun button
+   - Mobile menu
+   - Social media icons
+   - Service icons
+   - Testimonial stars
+
+   We explicitly force Boxicons to use its own icon font so the icons do not
+   disappear when the theme stylesheet changes.
+============================================================================ */
+
+.bx,
+[class^="bx-"],
+[class*=" bx-"] {
+    font-family: "boxicons" !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* ============================================================================
+   3. HTML
+============================================================================ */
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+}
+
+/*
+   Anti-flash-of-wrong-theme: the inline script in <head> adds this class to
+   <html> BEFORE the stylesheet paints, using the same variables as
+   body.theme-light. JS removes the class once script.js finishes deciding
+   the real theme.
+*/
+html.theme-light-loading body {
+    --bg-color: #f5f7fb;
+    --snd-bg-color: #e9edf5;
+    --card-color: #ffffff;
+    --text-color: #172033;
+    --muted-text-color: #536078;
+    --main-color: #315bea;
+    --accent-color: #173db7;
+    --border-color: rgba(49, 91, 234, 0.28);
+    --input-bg: #ffffff;
+    --header-bg: rgba(255, 255, 255, 0.96);
+    --shadow-color: rgba(49, 91, 234, 0.18);
+}
+
+
+/* ============================================================================
+   4. BODY
+============================================================================ */
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+
+    transition:
+        background-color 0.4s ease,
+        color 0.4s ease;
+}
+
+
+/* ============================================================================
+   5. GLOBAL HEADINGS AND PARAGRAPHS
+============================================================================
+
+   These rules make sure ALL normal headings and paragraphs follow the active
+   theme.
+============================================================================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    color: var(--text-color);
+
+    transition:
+        color 0.4s ease;
+}
+
+
+p {
+    line-height: 1.7;
+}
+
+
+/* ============================================================================
+   6. THEME VARIABLES
+============================================================================
+
+   DEFAULT THEME = DARK
+============================================================================ */
+
+:root {
+    --bg-color: #071a14;
+    --snd-bg-color: #102c21;
+    --card-color: #0b2119;
+
+    --text-color: #f5fff9;
+    --muted-text-color: #b9cfc4;
+
+    --main-color: #00e889;
+    --accent-color: #7affbd;
+
+    --border-color: rgba(0, 232, 137, 0.45);
+
+    --input-bg: #0a2118;
+
+    --header-bg: rgba(7, 26, 20, 0.96);
+
+    --shadow-color: rgba(0, 232, 137, 0.22);
+}
+
+
+/* ============================================================================
+   7. LIGHT THEME
+============================================================================ */
+
+body.theme-light {
+    --bg-color: #f5f7fb;
+    --snd-bg-color: #e9edf5;
+    --card-color: #ffffff;
+
+    --text-color: #172033;
+    --muted-text-color: #536078;
+
+    --main-color: #315bea;
+    --accent-color: #173db7;
+
+    --border-color: rgba(49, 91, 234, 0.28);
+
+    --input-bg: #ffffff;
+
+    --header-bg: rgba(255, 255, 255, 0.97);
+
+    --shadow-color: rgba(49, 91, 234, 0.18);
+}
+
+
+/* ============================================================================
+   8. COMMON SECTION STYLING
+============================================================================ */
+
+section {
+    min-height: 100vh;
+    padding: 10rem 9% 2rem;
+}
+
+
+/* Text inside <span> follows the active theme's main color */
+
+span {
+    color: var(--main-color);
+}
+
+
+/* ============================================================================
+   9. HEADER
+============================================================================ */
+
+.header {
+    position: fixed;
+
+    width: 100%;
+    top: 0;
+    right: 0;
+
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 2rem 5%;
+
+    background: var(--header-bg);
+
+    backdrop-filter: blur(10px);
+
+    transition:
+        background-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+/* ============================================================================
+   10. LOGO
+============================================================================ */
+
+.logo {
+    font-size: 3rem;
+
+    color: var(--main-color);
+
+    font-weight: 700;
+
+    cursor: default;
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+
+/* ============================================================================
+   11. DESKTOP NAVIGATION
+============================================================================ */
+
+.navbar {
+    display: flex;
+    align-items: center;
+}
+
+
+.navbar a {
+    font-size: 1.9rem;
+
+    color: var(--main-color);
+
+    margin-left: 4rem;
+
+    font-weight: 700;
+
+    transition:
+        color 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+.navbar a:hover,
+.navbar a.active {
+    color: var(--text-color);
+}
+
+
+/* ============================================================================
+   11B. HEADER CONTROLS (groups menu icon + theme toggle together)
+============================================================================ */
+
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+
+    flex-shrink: 0;
+}
+
+
+/* ============================================================================
+   12. MOBILE MENU ICON
+============================================================================ */
+
+/*
+   Drawn with background/box-shadow rather than an icon-font glyph, so it
+   can never go invisible if the Boxicons font fails to load.
+*/
+#menu-icon {
+    display: none;
+    position: relative;
+
+    width: 3rem;
+    height: 0.3rem;
+
+    padding: 1.15rem 0;
+    box-sizing: content-box;
+
+    background: var(--main-color);
+    background-clip: content-box;
+    border-radius: 2px;
+
+    font-size: 0;
+    line-height: 0;
+
+    cursor: pointer;
+
+    z-index: 1001;
+
+    flex-shrink: 0;
+
+    transition:
+        background-color 0.4s ease,
+        opacity 0.2s ease;
+}
+
+#menu-icon::before,
+#menu-icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+
+    width: 100%;
+    height: 0.3rem;
+
+    background: var(--main-color);
+    border-radius: 2px;
+
+    transition:
+        top 0.3s ease,
+        bottom 0.3s ease,
+        transform 0.3s ease,
+        background-color 0.4s ease;
+}
+
+#menu-icon::before {
+    top: 0.35rem;
+}
+
+#menu-icon::after {
+    bottom: 0.35rem;
+}
+
+/* Open state: JS toggles this class to morph the bars into an X */
+#menu-icon.bx-x {
+    background: transparent;
+}
+
+#menu-icon.bx-x::before {
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+}
+
+#menu-icon.bx-x::after {
+    bottom: 50%;
+    transform: translateY(50%) rotate(-45deg);
+}
+
+
+/* ============================================================================
+   13. THEME TOGGLE - PILL SWITCH
+============================================================================
+
+   Single source of truth for the toggle. (Previously this block, its inner
+   icon rule, and its :hover state were each declared twice in this file,
+   with the later copies silently overriding the earlier ones — removed.)
+============================================================================ */
+
+.theme-toggle {
+    position: relative;
+
+    width: 6.5rem;
+    height: 3.4rem;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0.3rem;
+
+    /* Track uses main-color as its border/background so it always stands
+       out from the header, instead of matching --bg-color / --header-bg
+       (which are nearly identical in the dark theme, making it invisible). */
+    border: 0.2rem solid var(--main-color);
+    border-radius: 3rem;
+
+    background: var(--snd-bg-color);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.4s ease,
+        border-color 0.4s ease,
+        transform 0.3s ease;
+}
+
+.theme-toggle i {
+    position: absolute;
+
+    left: 0.3rem;
+
+    width: 2.6rem;
+    height: 2.6rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    /* Bright circle against the dark track, instead of --header-bg which
+       is nearly the same near-black as the track/header in dark mode. */
+    background: var(--main-color);
+
+    color: var(--bg-color);
+
+    font-size: 1.7rem;
+    line-height: 1;
+
+    transition:
+        left 0.4s ease,
+        background-color 0.4s ease,
+        color 0.4s ease;
+}
+
+
+/* LIGHT MODE */
+
+body.theme-light .theme-toggle {
+    background: #172033;
+    border-color: #172033;
+}
+
+body.theme-light .theme-toggle i {
+    left: 3.5rem;
+    background: #ffffff;
+    color: #172033;
+}
+
+
+/* Focus + hover */
+
+.theme-toggle:focus-visible {
+    outline: 0.2rem solid var(--main-color);
+    outline-offset: 0.3rem;
+}
+
+.theme-toggle:hover {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    transform: scale(1.05);
+}
+
+/* Swap the circle to the track's resting colors on hover so it stays
+   visible instead of matching the now main-color track. */
+.theme-toggle:hover i {
+    background: var(--bg-color);
+    color: var(--main-color);
+}
+
+
+/* ============================================================================
+   14. HOME SECTION
+============================================================================ */
+
+.home {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 4rem;
+}
+
+
+/* ============================================================================
+   15. HOME IMAGE
+============================================================================ */
+
+.home-img img {
+    width: 25vw;
+    max-width: 380px;
+
+    border-radius: 50%;
+
+    border: 0.3rem solid var(--main-color);
+
+    box-shadow:
+        0 0 25px var(--shadow-color);
+
+    cursor: pointer;
+
+    animation:
+        floatImage 4s ease-in-out infinite;
+
+    transition:
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+.home-img img:hover {
+    box-shadow:
+        0 0 25px var(--main-color),
+        0 0 35px var(--main-color),
+        0 0 55px var(--shadow-color);
+}
+
+
+@keyframes floatImage {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-2.4rem);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+
+}
+
+
+/* ============================================================================
+   16. HOME CONTENT
+============================================================================ */
+
+.home-content {
+    margin-left: 5rem;
+
+    max-width: 700px;
+}
+
+
+.home-content h3 {
+    font-size: 3.7rem;
+
+    font-weight: 700;
+}
+
+
+.home-content h3:nth-of-type(2) {
+    margin-bottom: 2rem;
+}
+
+
+.home-content h1 {
+    font-size: 6rem;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+}
+
+
+.home-content p {
+    font-size: 1.7rem;
+
+    color: var(--muted-text-color);
+
+    margin: 1.5rem 0;
+}
+
+
+/* ============================================================================
+   17. SOCIAL MEDIA
+============================================================================ */
+
+.social-media {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+}
+
+
+.social-media a {
+    display: inline-flex;
+
+    justify-content: center;
+    align-items: center;
+
+    width: 42px;
+    height: 42px;
+
+    background: transparent;
+
+    border: 0.2rem solid var(--main-color);
+
+    border-radius: 50%;
+
+    font-size: 2rem;
+
+    color: var(--main-color);
+
+    margin: 3rem 1.5rem 3rem 0;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/*
+   Explicitly target the icon inside the social media link.
+*/
+
+.social-media a i {
+    color: inherit;
+
+    font-size: 2rem;
+
+    line-height: 1;
+}
+
+
+.social-media a:hover {
+    transform:
+        scale(1.2)
+        translateY(-10px);
+
+    background-color: var(--main-color);
+
+    color: var(--header-bg);
+
+    box-shadow:
+        0 0 25px var(--shadow-color);
+}
+
+
+/* ============================================================================
+   18. BUTTONS
+============================================================================ */
+
+.btn {
+    display: inline-block;
+
+    padding: 1rem 2.8rem;
+
+    background: var(--main-color);
+
+    border-radius: 4rem;
+
+    box-shadow: none;
+
+    font-size: 1.6rem;
+
+    color: #ffffff;
+
+    letter-spacing: 0.1rem;
+
+    font-weight: 700;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+
+    cursor: pointer;
+}
+
+
+.btn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 0 1.6rem var(--shadow-color);
+}
+
+
+/* ============================================================================
+   19. ABOUT SECTION
+============================================================================ */
+
+.about {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4rem;
+
+    background: var(--snd-bg-color);
+}
+
+
+.about-img img {
+    width: 25vw;
+    max-width: 380px;
+
+    border: 2px solid var(--main-color);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 25px var(--shadow-color);
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+.about-img img:hover {
+    box-shadow:
+        0 0 25px var(--main-color),
+        0 0 35px var(--main-color),
+        0 0 55px var(--shadow-color);
+}
+
+
+.about-content {
+    padding: 0 4rem;
+
+    max-width: 750px;
+}
+
+
+.about-content h2 {
+    text-align: left;
+
+    line-height: 1.2;
+}
+
+
+.about-content h3 {
+    font-size: 3rem;
+
+    margin-top: 1.5rem;
+}
+
+
+.about-content p {
+    font-size: 1.7rem;
+
+    color: var(--muted-text-color);
+
+    margin: 2rem 0 3rem;
+}
+
+
+/* ============================================================================
+   20. HEADINGS
+============================================================================ */
+
+.heading {
+    text-align: center;
+
+    font-size: 6rem;
+}
+
+
+/* ============================================================================
+   21. SERVICES
+============================================================================ */
+
+.services h2 {
+    margin-bottom: 5rem;
+}
+
+
+.services-container {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    flex-wrap: wrap;
+
+    gap: 2rem;
+}
+
+
+.services-container .services-box {
+    flex: 1 1 30rem;
+
+    background: var(--card-color);
+
+    padding: 6rem 2rem;
+
+    border-radius: 2rem;
+
+    text-align: center;
+
+    border: 0.3rem solid var(--border-color);
+
+    transition:
+        border-color 0.4s ease,
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+.services-container .services-box:hover {
+    border-color: var(--main-color);
+
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 12px 30px var(--shadow-color);
+}
+
+
+/*
+   Service icons.
+*/
+
+.services-box i {
+    font-size: 7rem;
+
+    color: var(--main-color);
+
+    display: inline-block;
+}
+
+
+.services-box h3 {
+    font-size: 2.6rem;
+
+    margin: 1.5rem 0;
+}
+
+
+.services-box p {
+    font-size: 1.6rem;
+
+    color: var(--muted-text-color);
+
+    margin: 1rem 0 3rem;
+}
+
+
+/* ============================================================================
+   22. TESTIMONIALS
+============================================================================ */
+
+.testimonials {
+    background: var(--snd-bg-color);
+}
+
+
+.testimonials-box {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    width: 100%;
+}
+
+
+.testimonials .heading {
+    margin-bottom: 2rem;
+}
+
+
+.testimonial-intro {
+    max-width: 750px;
+
+    text-align: center;
+
+    font-size: 1.7rem;
+
+    color: var(--muted-text-color);
+
+    margin-bottom: 4rem;
+}
+
+
+/* ============================================================================
+   23. TESTIMONIAL IMAGE
+============================================================================ */
+
+.testimonials-box img {
+    width: 15rem;
+    height: 15rem;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 3px solid var(--main-color);
+
+    box-shadow:
+        0 0 25px var(--shadow-color);
+}
+
+
+/* ============================================================================
+   24. TESTIMONIAL GRID
+============================================================================ */
+
+.wrapper {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 3rem;
+
+    width: 100%;
+
+    justify-items: center;
+}
+
+
+/* ============================================================================
+   25. TESTIMONIAL CARD
+============================================================================ */
+
+.testimonial-item {
+    min-height: 450px;
+
+    width: 100%;
+
+    max-width: 450px;
+
+    background: var(--card-color);
+
+    border: 0.3rem solid var(--border-color);
+
+    border-radius: 2rem;
+
+    margin: 0 1rem;
+
+    padding: 3rem 2rem;
+
+    cursor: pointer;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 1.5rem;
+
+    color: var(--text-color);
+
+    transition:
+        border-color 0.4s ease,
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+.testimonial-item:hover {
+    border-color: var(--main-color);
+
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 12px 30px var(--shadow-color);
+}
+
+
+.testimonial-item h2 {
+    font-size: 3rem;
+}
+
+
+.testimonial-item h4 {
+    font-size: 1.6rem;
+
+    color: var(--main-color);
+}
+
+
+.testimonial-item p {
+    font-size: 1.7rem;
+
+    color: var(--muted-text-color);
+
+    text-align: center;
+}
+
+
+/* ============================================================================
+   26. TESTIMONIAL STARS
+============================================================================ */
+
+.rating i {
+    color: #f5b400;
+
+    font-size: 2rem;
+
+    display: inline-block;
+}
+
+
+.rating {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 0.2rem;
+}
+
+
+/* ============================================================================
+   27. WRITE TESTIMONIAL BUTTON
+============================================================================ */
+
+.testimonial-action {
+    margin-top: 4rem;
+
+    text-align: center;
+}
+
+
+/* ============================================================================
+   28. CONTACT
+============================================================================ */
+
+.contact {
+    background-color: var(--bg-color);
+}
+
+
+.contact h2 {
+    margin-bottom: 3rem;
+}
+
+
+.contact form {
+    max-width: 80rem;
+
+    margin: 1rem auto 3rem;
+
+    text-align: center;
+}
+
+
+.contact form .input-box {
+    display: flex;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+}
+
+
+.contact form .input-box input,
+.contact form textarea {
+    width: 100%;
+
+    padding: 1.5rem;
+
+    font-size: 1.6rem;
+
+    color: var(--text-color);
+
+    background: var(--input-bg);
+
+    border-radius: 0.8rem;
+
+    border: 0.2rem solid var(--border-color);
+
+    margin: 0.7rem 0;
+
+    resize: none;
+
+    transition:
+        border-color 0.3s ease,
+        background-color 0.4s ease,
+        color 0.4s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.contact form .input-box input::placeholder,
+.contact form textarea::placeholder {
+    color: var(--muted-text-color);
+}
+
+
+.contact form .input-box input:focus,
+.contact form textarea:focus {
+    border-color: var(--main-color);
+
+    box-shadow:
+        0 0 12px var(--shadow-color);
+}
+
+
+.contact form .input-box input {
+    width: 49%;
+
+    margin:
+        0.7rem
+        0.35rem;
+}
+
+
+.contact form .btn {
+    margin-top: 2rem;
+}
+
+
+/* ============================================================================
+   29. SUCCESS / ERROR MESSAGES
+============================================================================ */
+
+.success-message,
+.error-message {
+    max-width: 80rem;
+
+    margin: 2rem auto;
+
+    padding: 1.5rem 2rem;
+
+    border-radius: 1rem;
+
+    text-align: center;
+
+    font-size: 1.6rem;
+
+    font-weight: 600;
+}
+
+
+.success-message {
+    background: rgba(0, 232, 137, 0.12);
+
+    border: 1px solid var(--main-color);
+
+    color: var(--main-color);
+}
+
+
+.error-message {
+    background: rgba(220, 53, 69, 0.1);
+
+    border: 1px solid #dc3545;
+
+    color: #dc3545;
+}
+
+
+/* ============================================================================
+   30. FOOTER
+============================================================================ */
+
+.footer {
+    position: relative;
+
+    bottom: 0;
+
+    width: 100%;
+
+    padding: 40px 0;
+
+    background-color: var(--snd-bg-color);
+}
+
+
+.footer .social {
+    text-align: center;
+
+    padding-bottom: 25px;
+}
+
+
+.footer .social a {
+    font-size: 25px;
+
+    color: var(--main-color);
+
+    border: 2px solid var(--main-color);
+
+    width: 42px;
+    height: 42px;
+
+    line-height: 38px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    border-radius: 50%;
+
+    margin: 0 10px;
+
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease,
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+.footer .social a i {
+    color: inherit;
+
+    font-size: 2rem;
+
+    line-height: 1;
+}
+
+
+.footer .social a:hover {
+    transform:
+        scale(1.2)
+        translateY(-10px);
+
+    background-color: var(--main-color);
+
+    color: var(--header-bg);
+
+    box-shadow:
+        0 0 25px var(--shadow-color);
+}
+
+
+.footer .copyright {
+    margin-top: 20px;
+
+    text-align: center;
+
+    font-size: 1.6rem;
+
+    color: var(--muted-text-color);
+}
+
+
+/* ============================================================================
+   31. README PAGE
+============================================================================ */
+
+.readme {
+    max-width: 900px;
+
+    margin: 120px auto;
+
+    padding: 40px;
+
+    background: var(--card-color);
+
+    border: 0.2rem solid var(--border-color);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 20px var(--shadow-color);
+}
+
+
+.readme h1 {
+    font-size: 4rem;
+
+    color: var(--main-color);
+
+    text-align: center;
+
+    margin-bottom: 30px;
+}
+
+
+.readme h2,
+.readme h3,
+.readme h4 {
+    color: var(--text-color);
+
+    margin-top: 2rem;
+
+    margin-bottom: 1rem;
+}
+
+
+.readme p {
+    font-size: 1.8rem;
+
+    line-height: 2;
+
+    text-align: justify;
+
+    color: var(--muted-text-color);
+}
+
+
+/* ============================================================================
+   32. LIGHT THEME POLISH
+============================================================================ */
+
+body.theme-light .header {
+    box-shadow:
+        0 2px 20px rgba(23, 32, 51, 0.08);
+}
+
+
+body.theme-light .navbar a:hover,
+body.theme-light .navbar a.active {
+    color: var(--main-color);
+}
+
+
+body.theme-light .testimonial-item,
+body.theme-light .services-container .services-box,
+body.theme-light .readme {
+    box-shadow:
+        0 10px 30px rgba(23, 32, 51, 0.08);
+}
+
+
+/* ============================================================================
+   33. TABLET / LARGE SCREENS
+============================================================================ */
+
+@media (max-width: 1200px) {
+
+    html {
+        font-size: 55%;
+    }
+
+    .wrapper {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+/* ============================================================================
+   34. TABLET
+============================================================================ */
+
+@media (max-width: 991px) {
+
+    .header {
+        padding:
+            2rem
+            3%;
+    }
+
+
+    section {
+        padding:
+            10rem
+            5%
+            2rem;
+    }
+
+
+    .services {
+        padding-top: 7rem;
+    }
+
+
+    .wrapper {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .contact form .input-box input {
+        width: 100%;
+    }
+
+
+    .footer {
+        padding:
+            2rem
+            3%;
+    }
+
+}
+
+
+/* ============================================================================
+   35. MOBILE NAVIGATION
+============================================================================ */
+
+@media (max-width: 786px) {
+
+    /*
+    ---------------------------------------------------------------------------
+    MOBILE MENU ICON
+    ---------------------------------------------------------------------------
+    */
+
+    #menu-icon {
+        display: block;
+    }
+
+
+    /*
+    ---------------------------------------------------------------------------
+    MOBILE NAVIGATION PANEL
+    ---------------------------------------------------------------------------
+    */
+
+    .navbar {
+
+        position: absolute;
+
+        top: 100%;
+
+        right: -100%;
+
+        width: 255px;
+
+        min-height: 100vh;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        background: var(--header-bg);
+
+        border-left:
+            1px solid
+            var(--border-color);
+
+        backdrop-filter: blur(10px);
+
+        box-shadow:
+            -10px
+            0
+            25px
+            rgba(0, 0, 0, 0.12);
+
+        transition:
+            right 0.5s ease;
+
+        z-index: 1000;
+    }
+
+
+    /*
+    ---------------------------------------------------------------------------
+    OPEN MOBILE NAVIGATION
+    ---------------------------------------------------------------------------
+    */
+
+    .navbar.active {
+        right: 0;
+    }
+
+
+    /*
+    ---------------------------------------------------------------------------
+    MOBILE NAVIGATION LINKS
+    ---------------------------------------------------------------------------
+    */
+
+    .navbar a {
+
+        display: block;
+
+        padding: 17px;
+
+        font-size: 2.2rem;
+
+        margin-left: 0;
+
+        color: var(--main-color);
+
+        transition:
+            background-color 0.3s ease,
+            color 0.3s ease;
+    }
+
+
+    .navbar a:hover,
+    .navbar a.active {
+
+        color: var(--text-color);
+
+        background:
+            rgba(49, 91, 234, 0.08);
+    }
+
+
+    /*
+    ---------------------------------------------------------------------------
+    HOME
+    ---------------------------------------------------------------------------
+    */
+
+    .home {
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+
+    .home-content {
+
+        order: 2;
+
+        margin-left: 0;
+
+        max-width: 100%;
+    }
+
+
+    .home-content h3 {
+        font-size: 2.6rem;
+    }
+
+
+    .home-content h1 {
+        font-size: 5rem;
+    }
+
+
+    .home-img img {
+
+        width: 70vw;
+
+        margin-top: 4rem;
+    }
+
+
+    /*
+    ---------------------------------------------------------------------------
+    ABOUT
+    ---------------------------------------------------------------------------
+    */
+
+    .about {
+
+        flex-direction: column-reverse;
+
+        text-align: center;
+    }
+
+
+    .about-content {
+
+        padding: 0 1rem;
+    }
+
+
+    .about-content h2 {
+
+        text-align: center;
+    }
+
+
+    .about-img img {
+
+        width: 70vw;
+
+        margin-top: 4rem;
+    }
+
+
+    /*
+    ---------------------------------------------------------------------------
+    SERVICES
+    ---------------------------------------------------------------------------
+    */
+
+    .services h2 {
+        margin-bottom: 3rem;
+    }
+
+
+    /*
+    ---------------------------------------------------------------------------
+    TESTIMONIALS
+    ---------------------------------------------------------------------------
+    */
+
+    .wrapper {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .testimonial-item {
+
+        margin: 0;
+
+        max-width: 600px;
+    }
+
+
+    /*
+    ---------------------------------------------------------------------------
+    THEME BUTTON
+    ---------------------------------------------------------------------------
+    */
+
+    .theme-toggle {
+
+        width: 4.2rem;
+
+        height: 4.2rem;
+
+        padding: 0;
+
+        font-size: 2rem;
+    }
+
+
+    .theme-toggle i {
+
+        font-size: 2rem;
+    }
+
+}
+
+
+/* ============================================================================
+   36. SMALL MOBILE
+============================================================================ */
+
+@media (max-width: 617px) {
+
+    section {
+
+        padding-left: 5%;
+
+        padding-right: 5%;
+    }
+
+
+    .home-img img {
+
+        width: 70vw;
+
+        margin-top: 8rem;
+    }
+
+
+    .about-img img {
+
+        width: 70vw;
+
+        margin-top: 4rem;
+    }
+
+
+    .heading {
+
+        font-size: 4.5rem;
+    }
+
+
+    .home-content h1 {
+
+        font-size: 4.5rem;
+    }
+
+
+    .home-content h3 {
+
+        font-size: 2.3rem;
+    }
+
+
+    .contact form .input-box input {
+
+        width: 100%;
+
+        margin: 0.7rem 0;
+    }
+
+
+    .readme {
+
+        margin:
+            100px
+            5%
+            40px;
+
+        padding: 25px;
+    }
+
+
+    .testimonial-item {
+
+        min-height: 400px;
+    }
+
+}
+
+
+/* ============================================================================
+   37. VERY SMALL DEVICES
+============================================================================ */
+
+@media (max-width: 450px) {
+
+    html {
+        font-size: 50%;
+    }
+
+
+    .heading {
+        font-size: 4rem;
+    }
+
+
+    .testimonial-item {
+        min-height: 400px;
+    }
+
+
+    .navbar {
+        width: 230px;
+    }
+
+}
