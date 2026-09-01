@@ -1,0 +1,487 @@
+/*
+===============================================================================
+ADMIN DASHBOARD LAYOUT
+===============================================================================
+Loads AFTER style.css and reuses its color variables (--bg-color,
+--main-color, --card-color, etc.) so the admin panel matches the public
+site's theme automatically, including light/dark mode. This file only adds
+the sidebar/topbar/card/table layout that style.css doesn't have.
+===============================================================================
+*/
+
+.admin-shell {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+
+.admin-sidebar {
+    width: 240px;
+
+    background: var(--card-color);
+    border-right: 0.2rem solid var(--border-color);
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 2.4rem 1.6rem;
+
+    z-index: 1000;
+
+    transition:
+        left 0.3s ease,
+        background-color 0.4s ease,
+        border-color 0.4s ease;
+}
+
+.admin-logo {
+    font-size: 2rem;
+    font-weight: 700;
+
+    color: var(--main-color);
+
+    margin-bottom: 2.5rem;
+}
+
+.admin-logo span {
+    color: var(--muted-text-color);
+    font-weight: 400;
+}
+
+.admin-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    flex: 1;
+}
+
+.admin-nav a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 1.1rem 1.2rem;
+
+    border-radius: 0.9rem;
+
+    color: var(--muted-text-color);
+
+    font-weight: 600;
+    font-size: 1.4rem;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.admin-nav a i {
+    font-size: 1.7rem;
+}
+
+.admin-nav a:hover,
+.admin-nav a.active {
+    background: var(--shadow-color);
+    color: var(--main-color);
+}
+
+.admin-logout {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    color: #ff5c72;
+
+    font-weight: 600;
+    font-size: 1.4rem;
+
+    padding: 1.1rem 1.2rem;
+}
+
+/* Main column */
+
+.admin-main {
+    margin-left: 240px;
+
+    flex: 1;
+
+    min-height: 100vh;
+}
+
+.admin-topbar {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    padding: 1.8rem 2.6rem;
+
+    border-bottom: 0.2rem solid var(--border-color);
+
+    position: sticky;
+    top: 0;
+
+    background: var(--header-bg);
+    backdrop-filter: blur(10px);
+
+    z-index: 10;
+
+    transition:
+        background-color 0.4s ease,
+        border-color 0.4s ease;
+}
+
+.admin-topbar h1 {
+    font-size: 2.2rem;
+    flex: 1;
+}
+
+.admin-user {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    color: var(--muted-text-color);
+    font-size: 1.4rem;
+}
+
+.admin-user i {
+    font-size: 2rem;
+    color: var(--main-color);
+}
+
+.sidebar-toggle {
+    display: none;
+
+    background: none;
+    border: none;
+
+    color: var(--main-color);
+
+    font-size: 2.4rem;
+
+    cursor: pointer;
+}
+
+.admin-content {
+    padding: 2.6rem;
+}
+
+/* Stat cards */
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.6rem;
+
+    margin-bottom: 2.6rem;
+}
+
+.stat-card {
+    background: var(--card-color);
+    border: 0.2rem solid var(--border-color);
+    border-radius: 1.4rem;
+
+    padding: 1.8rem;
+
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+
+    transition:
+        border-color 0.4s ease,
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.stat-card:hover {
+    border-color: var(--main-color);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px var(--shadow-color);
+}
+
+.stat-card i {
+    font-size: 3rem;
+    color: var(--main-color);
+}
+
+.stat-card span {
+    font-size: 2.2rem;
+    font-weight: 700;
+    display: block;
+}
+
+.stat-card p {
+    color: var(--muted-text-color);
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+/* Panels */
+
+.admin-panel {
+    background: var(--card-color);
+    border: 0.2rem solid var(--border-color);
+    border-radius: 1.4rem;
+
+    padding: 2rem;
+
+    margin-bottom: 2.4rem;
+}
+
+.admin-panel h2 {
+    font-size: 1.7rem;
+    margin-bottom: 1.4rem;
+
+    color: var(--accent-color);
+}
+
+/* Table */
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    text-align: left;
+
+    padding: 1rem 1.1rem;
+
+    border-bottom: 1px solid var(--border-color);
+
+    font-size: 1.4rem;
+}
+
+.admin-table th {
+    color: var(--muted-text-color);
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    letter-spacing: 0.05rem;
+}
+
+.btn-link {
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+
+    .admin-sidebar {
+        left: -260px;
+    }
+
+    .admin-sidebar.open {
+        left: 0;
+    }
+
+    .admin-main {
+        margin-left: 0;
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+
+    .admin-content {
+        padding: 1.8rem;
+    }
+
+}
+
+/* Badges, actions, forms, alerts (added for Messages CRUD and beyond) */
+
+.badge {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border-radius: 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.badge-green {
+    background: var(--shadow-color);
+    color: var(--main-color);
+}
+
+.badge-gray {
+    background: rgba(185, 207, 196, 0.15);
+    color: var(--muted-text-color);
+}
+
+.badge-blue {
+    background: rgba(90, 160, 255, 0.15);
+    color: #5aa0ff;
+}
+
+.truncate {
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.muted {
+    color: var(--muted-text-color);
+    font-size: 1.2rem;
+}
+
+.row-unread {
+    background: var(--shadow-color);
+}
+
+.row-actions {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.row-actions form {
+    display: inline;
+}
+
+.btn-small {
+    background: transparent;
+    border: 0.15rem solid var(--border-color);
+    color: var(--text-color);
+    padding: 0.6rem 1.1rem;
+    border-radius: 0.7rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-small:hover {
+    border-color: var(--main-color);
+    color: var(--main-color);
+}
+
+.btn-danger {
+    border-color: rgba(255, 92, 114, 0.4);
+    color: #ff5c72;
+}
+
+.btn-danger:hover {
+    border-color: #ff5c72;
+    color: #ff5c72;
+}
+
+.admin-alert {
+    padding: 1.3rem 1.7rem;
+    border-radius: 0.9rem;
+    margin-bottom: 1.6rem;
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.admin-alert-success {
+    background: var(--shadow-color);
+    border: 0.15rem solid var(--main-color);
+    color: var(--main-color);
+}
+
+.admin-alert-error {
+    background: rgba(255, 92, 114, 0.12);
+    border: 0.15rem solid #ff5c72;
+    color: #ff5c72;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.admin-form label {
+    font-size: 1.2rem;
+    color: var(--muted-text-color);
+    margin-bottom: -0.5rem;
+}
+
+.admin-form input,
+.admin-form textarea {
+    background: var(--input-bg);
+    border: 0.15rem solid var(--border-color);
+    color: var(--text-color);
+    padding: 1.1rem;
+    border-radius: 0.9rem;
+    font-size: 1.4rem;
+    resize: vertical;
+}
+
+.admin-form input:focus,
+.admin-form textarea:focus {
+    border-color: var(--main-color);
+    outline: none;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+}
+
+.btn-primary {
+    background: var(--main-color);
+    color: #04150e;
+    border: none;
+    padding: 1.1rem 2.2rem;
+    border-radius: 0.9rem;
+    font-weight: 700;
+    font-size: 1.4rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Native <details>/<summary> reply widget on the Messages page */
+
+details > summary {
+    list-style: none;
+    display: inline-block;
+}
+
+details > summary::-webkit-details-marker,
+details > summary::marker {
+    display: none;
+    content: "";
+}
+
+details[open] > summary {
+    margin-bottom: 0.8rem;
+    border-color: var(--main-color);
+    color: var(--main-color);
+}
+
+.reply-form {
+    background: var(--input-bg);
+    border: 0.15rem solid var(--border-color);
+    border-radius: 0.9rem;
+    padding: 1.2rem;
+    margin-top: 0.6rem;
+    min-width: 260px;
+}
+
+.reply-form textarea {
+    min-height: 7rem;
+}

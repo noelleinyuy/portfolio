@@ -64,6 +64,7 @@ refreshing or reopening the website.
 */
 
 const themeToggle = document.querySelector("#theme-toggle");
+const root = document.documentElement;
 
 function updateThemeButton() {
 
@@ -78,13 +79,21 @@ function updateThemeButton() {
         : "bx bx-moon";
 }
 
-const savedTheme = localStorage.getItem("portfolioTheme");
+const urlTheme = new URLSearchParams(window.location.search).get("theme");
+const savedTheme = urlTheme || localStorage.getItem("portfolioTheme");
+const shouldUseLightTheme = savedTheme === "light";
 
-if (savedTheme === "light") {
+if (urlTheme) {
+    localStorage.setItem("portfolioTheme", urlTheme);
+}
+
+if (shouldUseLightTheme) {
     document.body.classList.add("theme-light");
 } else {
     document.body.classList.remove("theme-light");
 }
+
+root.setAttribute("data-theme", shouldUseLightTheme ? "light" : "dark");
 
 // The inline head script added this class to <html> to avoid a flash of the
 // wrong theme before the CSS/JS load. Once the real theme class is applied
@@ -97,12 +106,11 @@ if (themeToggle) {
 
     themeToggle.addEventListener("click", () => {
 
-        document.body.classList.toggle("theme-light");
+        const isLightTheme = document.body.classList.toggle("theme-light");
+        const nextTheme = isLightTheme ? "light" : "dark";
 
-        localStorage.setItem(
-            "portfolioTheme",
-            document.body.classList.contains("theme-light") ? "light" : "dark"
-        );
+        localStorage.setItem("portfolioTheme", nextTheme);
+        root.setAttribute("data-theme", nextTheme);
 
         updateThemeButton();
 

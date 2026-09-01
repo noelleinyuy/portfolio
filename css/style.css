@@ -103,7 +103,8 @@ html {
    body.theme-light. JS removes the class once script.js finishes deciding
    the real theme.
 */
-html.theme-light-loading body {
+html[data-theme="light"],
+html.theme-light-loading {
     --bg-color: #f5f7fb;
     --snd-bg-color: #e9edf5;
     --card-color: #ffffff;
@@ -538,8 +539,7 @@ body.theme-light .theme-toggle i {
 
     cursor: pointer;
 
-    animation:
-        floatImage 4s ease-in-out infinite;
+    transform: none;
 
     transition:
         border-color 0.4s ease,
@@ -552,23 +552,6 @@ body.theme-light .theme-toggle i {
         0 0 25px var(--main-color),
         0 0 35px var(--main-color),
         0 0 55px var(--shadow-color);
-}
-
-
-@keyframes floatImage {
-
-    0% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-2.4rem);
-    }
-
-    100% {
-        transform: translateY(0);
-    }
-
 }
 
 
@@ -679,6 +662,35 @@ body.theme-light .theme-toggle i {
 
     box-shadow:
         0 0 25px var(--shadow-color);
+}
+
+
+/* ============================================================================
+   17.5. CV BUTTONS
+============================================================================ */
+
+.cv-buttons {
+    display: flex;
+
+    gap: 1.5rem;
+
+    flex-wrap: wrap;
+
+    margin-top: 2rem;
+}
+
+
+.cv-buttons .btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 0.7rem;
+}
+
+
+.cv-buttons .btn i {
+    font-size: 2rem;
 }
 
 
@@ -883,6 +895,86 @@ body.theme-light .theme-toggle i {
     color: var(--muted-text-color);
 
     margin: 1rem 0 3rem;
+}
+
+
+/* ============================================================================
+   21B. PROJECTS
+============================================================================ */
+
+.projects h2 {
+    margin-bottom: 5rem;
+}
+
+.projects-container {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    flex-wrap: wrap;
+
+    gap: 2rem;
+}
+
+.project-card {
+    flex: 1 1 30rem;
+    max-width: 380px;
+
+    background: var(--card-color);
+
+    border: 0.3rem solid var(--border-color);
+
+    border-radius: 2rem;
+
+    padding: 2rem;
+
+    text-align: center;
+
+    transition:
+        border-color 0.4s ease,
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.project-card:hover {
+    border-color: var(--main-color);
+
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 12px 30px var(--shadow-color);
+}
+
+.project-card img {
+    width: 100%;
+    height: 18rem;
+
+    object-fit: cover;
+
+    border-radius: 1.2rem;
+
+    margin-bottom: 1.5rem;
+}
+
+.project-card h3 {
+    font-size: 2.2rem;
+
+    margin-bottom: 1rem;
+}
+
+.project-card p {
+    font-size: 1.5rem;
+
+    color: var(--muted-text-color);
+
+    margin-bottom: 1.5rem;
+}
+
+body.theme-light .project-card {
+    box-shadow:
+        0 10px 30px rgba(23, 32, 51, 0.08);
 }
 
 
@@ -1104,7 +1196,8 @@ body.theme-light .theme-toggle i {
 
 
 .contact form .input-box input,
-.contact form textarea {
+.contact form textarea,
+.contact form select {
     width: 100%;
 
     padding: 1.5rem;
@@ -1132,13 +1225,15 @@ body.theme-light .theme-toggle i {
 
 
 .contact form .input-box input::placeholder,
-.contact form textarea::placeholder {
+.contact form textarea::placeholder,
+.contact form select::placeholder {
     color: var(--muted-text-color);
 }
 
 
 .contact form .input-box input:focus,
-.contact form textarea:focus {
+.contact form textarea:focus,
+.contact form select:focus {
     border-color: var(--main-color);
 
     box-shadow:
@@ -1146,12 +1241,51 @@ body.theme-light .theme-toggle i {
 }
 
 
-.contact form .input-box input {
+.contact form .input-box input,
+.contact form .rating-select {
     width: 49%;
 
     margin:
         0.7rem
         0.35rem;
+}
+
+
+.contact form .rating-field {
+    display: block;
+
+    width: 100%;
+}
+
+
+.contact form .rating-label {
+    display: block;
+
+    margin-bottom: 0.5rem;
+
+    color: var(--text-color);
+
+    font-size: 1.6rem;
+
+    font-weight: 600;
+
+    text-align: left;
+}
+
+
+.contact form .rating-select {
+    width: 100%;
+
+    appearance: none;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, var(--text-color) 50%),
+        linear-gradient(135deg, var(--text-color) 50%, transparent 50%);
+    background-position:
+        calc(100% - 2rem) calc(50% - 0.2rem),
+        calc(100% - 1.5rem) calc(50% - 0.2rem);
+    background-size: 0.6rem 0.6rem;
+    background-repeat: no-repeat;
 }
 
 
@@ -1286,6 +1420,20 @@ body.theme-light .theme-toggle i {
     font-size: 1.6rem;
 
     color: var(--muted-text-color);
+}
+
+.footer .admin-link {
+    color: var(--muted-text-color);
+
+    font-size: 1.3rem;
+
+    margin-left: 0.8rem;
+
+    transition: color 0.3s ease;
+}
+
+.footer .admin-link:hover {
+    color: var(--main-color);
 }
 
 
