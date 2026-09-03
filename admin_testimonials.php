@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $rating = max(1, min(5, (int) ($_POST["rating"] ?? 5)));
 
         if (isset($_FILES["image"]) && $_FILES["image"]["error"] !== UPLOAD_ERR_NO_FILE) {
-            $uploadedImage = save_uploaded_image($_FILES["image"], "images/testimonials");
+            $uploadedImage = handle_image_upload("image", "images/testimonials");
 
             if ($uploadedImage === false) {
                 flash("error", "Only JPG, PNG, GIF, and WEBP images are allowed.");
@@ -129,6 +129,7 @@ $testimonials = $conn->query("SELECT * FROM portfolio_testimonials ORDER BY Test
                 <a href="admin_messages.php"><i class="bx bx-envelope"></i> Messages</a>
                 <a href="admin_services.php"><i class="bx bx-briefcase"></i> Services</a>
                 <a href="admin_projects.php"><i class="bx bx-code-alt"></i> Projects</a>
+                <a href="admin_readme.php"><i class="bx bx-file"></i> Read Me</a>
                 <a href="admin_settings.php"><i class="bx bx-cog"></i> Settings</a>
             </nav>
 

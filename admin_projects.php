@@ -116,6 +116,7 @@ $projects = $conn->query("SELECT * FROM portfolio_projects ORDER BY ProjectID DE
             <a href="admin_services.php"><i class="bx bx-briefcase"></i> Services</a>
             <a href="admin_projects.php" class="active"><i class="bx bx-code-alt"></i> Projects</a>
             <a href="admin_visitors.php"><i class="bx bx-line-chart"></i> Visitors</a>
+            <a href="admin_readme.php"><i class="bx bx-file"></i> Read Me</a>
             <a href="admin_settings.php"><i class="bx bx-cog"></i> Settings</a>
         </nav>
 

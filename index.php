@@ -7,18 +7,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (!function_exists("ensure_testimonial_rating_column")) {
-    require_once __DIR__ . "/admin_helpers.php";
-}
-
-ensure_testimonial_rating_column($conn);
-
 // Don't pollute visitor stats with your own visits while logged into admin.
 if (!isset($_SESSION["admin_id"])) {
     track_visit($conn, "Home");
 }
 
-$testimonialSubmitted = isset($_GET["testimonial"]) && $_GET["testimonial"] === "success";
 $messageSent = false;
 $messageError = "";
 
@@ -89,7 +82,7 @@ $aboutHeading = get_site_setting($conn, 'AboutHeading', 'Software Engineering St
 $aboutText = get_site_setting($conn, 'AboutText', 'at the Catholic University of Cameroon (CATUC), Bamenda.');
 $profileImage = get_site_setting($conn, 'ProfileImage', 'NOEL.jpg');
 $aboutImage = get_site_setting($conn, 'AboutImage', 'images/about.jpeg');
-$cvLink = get_site_setting($conn, 'CVLink', 'files/Noel_CV.pdf');
+$cvLink = get_site_setting($conn, 'CVLink', '#');
 $socialLinkedIn = get_site_setting($conn, 'SocialLinkedIn', '#');
 $socialGithub = get_site_setting($conn, 'SocialGithub', '#');
 $socialFacebook = get_site_setting($conn, 'SocialFacebook', '#');
@@ -103,21 +96,9 @@ $socialInstagram = get_site_setting($conn, 'SocialInstagram', '#');
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <script>
-        (function () {
-            const urlTheme = new URLSearchParams(window.location.search).get("theme");
-            const savedTheme = urlTheme || localStorage.getItem("portfolioTheme");
-            const isLight = savedTheme === "light";
-
-            if (urlTheme) {
-                localStorage.setItem("portfolioTheme", urlTheme);
-            }
-
-            document.documentElement.setAttribute("data-theme", isLight ? "light" : "dark");
-
-            if (isLight) {
-                document.documentElement.classList.add("theme-light-loading");
-            }
-        })();
+        if (localStorage.getItem("portfolioTheme") === "light") {
+            document.documentElement.classList.add("theme-light-loading");
+        }
     </script>
     <link href="css/boxicons.min.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
@@ -162,7 +143,7 @@ $socialInstagram = get_site_setting($conn, 'SocialInstagram', '#');
                 <a href="<?php echo htmlspecialchars($socialFacebook); ?>"><i class="bx bxl-facebook"></i></a>
                 <a href="<?php echo htmlspecialchars($socialInstagram); ?>"><i class="bx bxl-instagram"></i></a>
             </div>
-            <a class="btn" href="<?php echo htmlspecialchars($cvLink); ?>" download>Download CV</a>
+            <a class="btn" href="<?php echo htmlspecialchars($cvLink); ?>">Download CV</a>
         </div>
     </section>
     <!-- About Section -->
@@ -171,7 +152,7 @@ $socialInstagram = get_site_setting($conn, 'SocialInstagram', '#');
             <h2 class="heading">About <span>Me</span> </h2>
             <h3>I'm a <span><?php echo htmlspecialchars($aboutHeading); ?></span></h3>
             <p><?php echo htmlspecialchars($aboutText); ?></p>
-            <a class="btn" href="readme.html">Read more</a>
+            <a class="btn" href="readme.php">Read more</a>
         </div>
         <div class="about-img">
             <img alt="" src="<?php echo htmlspecialchars($aboutImage); ?>" />
@@ -256,12 +237,6 @@ $socialInstagram = get_site_setting($conn, 'SocialInstagram', '#');
                 If you have worked with me, you can also share your experience.
             </p>
 
-            <?php if ($testimonialSubmitted): ?>
-                <div class="success-message" style="margin-bottom: 1.5rem;">
-                    Thank you! Your testimonial has been submitted successfully and will appear after admin approval.
-                </div>
-            <?php endif; ?>
-
             <div class="wrapper">
 
                 <?php
@@ -272,8 +247,7 @@ $socialInstagram = get_site_setting($conn, 'SocialInstagram', '#');
                     Name,
                     Role,
                     Image,
-                    Message,
-                    Rating
+                    Message
                 FROM portfolio_testimonials
                 WHERE Status = 'Visible'
                 ORDER BY TestimonialID DESC
@@ -311,10 +285,14 @@ $socialInstagram = get_site_setting($conn, 'SocialInstagram', '#');
 
                             <?php endif; ?>
 
-                            <div class="rating" aria-label="<?php echo (int) ($testimonial["Rating"] ?? 5); ?> out of 5 stars">
-                                <?php for ($star = 1; $star <= 5; $star++): ?>
-                                    <i class="bx <?php echo $star <= (int) ($testimonial["Rating"] ?? 5) ? "bxs-star" : "bx-star"; ?>"></i>
-                                <?php endfor; ?>
+                            <div class="rating">
+
+                                <i class="bx bxs-star"></i>
+                                <i class="bx bxs-star"></i>
+                                <i class="bx bxs-star"></i>
+                                <i class="bx bxs-star"></i>
+                                <i class="bx bxs-star"></i>
+
                             </div>
 
                             <p>

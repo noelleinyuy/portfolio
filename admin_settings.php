@@ -6,14 +6,13 @@ require_admin_login();
 
 $adminName = $_SESSION["admin_name"] ?? "Admin";
 
+// Text/textarea fields handled generically.
 $fields = [
     "SiteName" => "Site name / your name",
     "HomeIntro" => "Home intro paragraph",
     "TypedRoles" => "Typed roles (comma-separated)",
     "AboutHeading" => "About role/title (e.g. Software Engineering Student)",
     "AboutText" => "About paragraph",
-    "ProfileImage" => "Profile image",
-    "AboutImage" => "About image",
     "CVLink" => "CV download link",
     "SocialLinkedIn" => "LinkedIn URL",
     "SocialGithub" => "GitHub URL",
@@ -21,51 +20,24 @@ $fields = [
     "SocialInstagram" => "Instagram URL",
 ];
 
-function upload_site_image(array $file, string $folderName): ?string
-{
-    if (!isset($file["tmp_name"]) || !is_uploaded_file($file["tmp_name"]) || $file["error"] !== UPLOAD_ERR_OK) {
-        return null;
-    }
-
-    $mime = mime_content_type($file["tmp_name"]);
-    $allowed = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-    if (!in_array($mime, $allowed, true)) {
-        return null;
-    }
-
-    $folder = __DIR__ . "/images/" . $folderName . "/";
-    if (!is_dir($folder)) {
-        mkdir($folder, 0777, true);
-    }
-
-    $safeName = time() . "_" . preg_replace('/[^A-Za-z0-9._-]+/', '_', basename($file["name"]));
-    $target = $folder . $safeName;
-
-    if (!move_uploaded_file($file["tmp_name"], $target)) {
-        return null;
-    }
-
-    return "images/" . $folderName . "/" . $safeName;
-}
+// Image fields handled separately with real file upload.
+$imageFields = [
+    "ProfileImage" => "Profile image (home page)",
+    "AboutImage" => "About section image",
+];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["form"] ?? "") === "site") {
 
     foreach ($fields as $key => $label) {
-        $value = trim($_POST[$key] ?? "");
+        set_setting($conn, $key, trim($_POST[$key] ?? ""));
+    }
 
-        if ($key === "ProfileImage" && isset($_FILES["ProfileImage"])) {
-            $uploaded = upload_site_image($_FILES["ProfileImage"], "profile");
-            if ($uploaded !== null) {
-                $value = $uploaded;
-            }
-        } elseif ($key === "AboutImage" && isset($_FILES["AboutImage"])) {
-            $uploaded = upload_site_image($_FILES["AboutImage"], "about");
-            if ($uploaded !== null) {
-                $value = $uploaded;
-            }
+    foreach ($imageFields as $key => $label) {
+        $uploadedPath = handle_image_upload($key);
+        if ($uploadedPath !== null) {
+            set_setting($conn, $key, $uploadedPath);
         }
-
-        set_setting($conn, $key, $value);
+        // If nothing was uploaded, the existing saved value is left untouched.
     }
 
     flash("success", "Settings saved.");
@@ -109,6 +81,11 @@ foreach ($fields as $key => $label) {
     $values[$key] = get_setting($conn, $key);
 }
 
+$imageValues = [];
+foreach ($imageFields as $key => $label) {
+    $imageValues[$key] = get_setting($conn, $key);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,11 +117,12 @@ foreach ($fields as $key => $label) {
 
         <nav class="admin-nav">
             <a href="admin_dashboard.php"><i class="bx bx-grid-alt"></i> Dashboard</a>
+            <a href="admin_analytics.php"><i class="bx bx-line-chart"></i> Analytics</a>
             <a href="admin_testimonials.php"><i class="bx bx-chat"></i> Testimonials</a>
             <a href="admin_messages.php"><i class="bx bx-envelope"></i> Messages</a>
             <a href="admin_services.php"><i class="bx bx-briefcase"></i> Services</a>
             <a href="admin_projects.php"><i class="bx bx-code-alt"></i> Projects</a>
-            <a href="admin_visitors.php"><i class="bx bx-line-chart"></i> Visitors</a>
+            <a href="admin_readme.php"><i class="bx bx-file"></i> Read Me</a>
             <a href="admin_settings.php" class="active"><i class="bx bx-cog"></i> Settings</a>
         </nav>
 
@@ -176,18 +154,30 @@ foreach ($fields as $key => $label) {
                 <form method="POST" class="admin-form" enctype="multipart/form-data">
                     <input type="hidden" name="form" value="site">
 
-                    <?php foreach ($fields as $key => $label): ?>
+                    <?php foreach ($imageFields as $key => $label): ?>
                         <label><?php echo e($label); ?></label>
-
-                        <?php if (in_array($key, ["ProfileImage", "AboutImage"], true)): ?>
-                            <input type="file" name="<?php echo e($key); ?>" accept="image/*">
-                            <?php if (!empty($values[$key])): ?>
-                                <div style="margin: 0.8rem 0 1rem;">
-                                    <img src="<?php echo e($values[$key]); ?>" alt="Current <?php echo e($key); ?>" style="max-width: 140px; border-radius: 10px; display: block;">
-                                    <small class="muted">Choose a new file to replace the image.</small>
+                        <div class="image-field">
+                            <?php if (!empty($imageValues[$key])): ?>
+                                <img
+                                    src="<?php echo e($imageValues[$key]); ?>"
+                                    alt="Current <?php echo e($label); ?>"
+                                    class="image-field-preview"
+                                >
+                            <?php else: ?>
+                                <div class="image-field-preview image-field-empty">
+                                    <i class="bx bx-image"></i>
                                 </div>
                             <?php endif; ?>
-                        <?php elseif (in_array($key, ["HomeIntro", "AboutText"], true)): ?>
+                            <div class="image-field-controls">
+                                <input type="file" name="<?php echo e($key); ?>" accept="image/png, image/jpeg, image/gif, image/webp">
+                                <span class="muted">Choose a new file to replace the current image. Leave empty to keep it as is.</span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+
+                    <?php foreach ($fields as $key => $label): ?>
+                        <label><?php echo e($label); ?></label>
+                        <?php if (in_array($key, ["HomeIntro", "AboutText"], true)): ?>
                             <textarea name="<?php echo e($key); ?>" rows="3"><?php echo e($values[$key]); ?></textarea>
                         <?php else: ?>
                             <input type="text" name="<?php echo e($key); ?>" value="<?php echo e($values[$key]); ?>">

@@ -1,40 +1,7 @@
 <?php
 
-session_start();
-
-function save_uploaded_image(array $file, string $directory = "images"): mixed
-{
-    if (($file["error"] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK) {
-        return null;
-    }
-
-    $tmpName = $file["tmp_name"] ?? "";
-    $originalName = basename($file["name"] ?? "");
-
-    if ($tmpName === "" || !is_uploaded_file($tmpName) || $originalName === "") {
-        return null;
-    }
-
-    $allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
-    $fileType = mime_content_type($tmpName);
-
-    if (!in_array($fileType, $allowedTypes, true) && !preg_match('/\.(jpe?g|png|gif|webp)$/i', $originalName)) {
-        return false;
-    }
-
-    $targetDirectory = __DIR__ . "/" . ltrim($directory, "/");
-    if (!is_dir($targetDirectory)) {
-        mkdir($targetDirectory, 0777, true);
-    }
-
-    $safeName = time() . "_" . preg_replace('/[^A-Za-z0-9._-]+/', '_', $originalName);
-    $targetPath = $targetDirectory . "/" . $safeName;
-
-    if (!move_uploaded_file($tmpName, $targetPath)) {
-        return null;
-    }
-
-    return rtrim($directory, "/") . "/" . $safeName;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
 function require_admin_login(): void
@@ -73,13 +40,6 @@ function column_exists(mysqli $conn, string $table, string $column): bool
     return $result && $result->num_rows > 0;
 }
 
-function ensure_testimonial_rating_column(mysqli $conn): void
-{
-    if (!column_exists($conn, "portfolio_testimonials", "Rating")) {
-        $conn->query("ALTER TABLE portfolio_testimonials ADD COLUMN Rating TINYINT UNSIGNED NOT NULL DEFAULT 5 AFTER Message");
-    }
-}
-
 function get_setting(mysqli $conn, string $name, string $default = ""): string
 {
     $stmt = $conn->prepare("SELECT SettingValue FROM portfolio_settings WHERE SettingName = ?");
@@ -104,4 +64,61 @@ function set_setting(mysqli $conn, string $name, string $value): void
     $stmt->bind_param("ss", $name, $value);
     $stmt->execute();
     $stmt->close();
+}
+
+/**
+ * Handles an uploaded image from $_FILES[$fieldName]. Validates it's a real
+ * image (not just a renamed file), saves it under $uploadDir with a unique
+ * name, and returns the relative web path to store in the database.
+ * Returns null if no file was chosen or it failed validation — callers
+ * should fall back to keeping the existing value in that case.
+ */
+function handle_image_upload(string $fieldName, string $uploadDir = "images/uploads"): ?string
+{
+    if (empty($_FILES[$fieldName]) || $_FILES[$fieldName]["error"] !== UPLOAD_ERR_OK) {
+        return null;
+    }
+
+    $allowedExtensions = ["jpg", "jpeg", "png", "gif", "webp"];
+    $originalName = $_FILES[$fieldName]["name"];
+    $tmpPath = $_FILES[$fieldName]["tmp_name"];
+    $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+
+    if (!in_array($extension, $allowedExtensions, true)) {
+        return null;
+    }
+
+    // Confirm it's actually a valid image, not just a file with a fake extension.
+    if (@getimagesize($tmpPath) === false) {
+        return null;
+    }
+
+    if ($_FILES[$fieldName]["size"] > 5 * 1024 * 1024) {
+        return null;
+    }
+
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    $safeName = uniqid("img_", true) . "." . $extension;
+    $destination = rtrim($uploadDir, "/") . "/" . $safeName;
+
+    if (move_uploaded_file($tmpPath, $destination)) {
+        return $destination;
+    }
+
+    return null;
+}
+
+/**
+ * Adds the Rating column to portfolio_testimonials if it doesn't already
+ * exist. Safe to call on every page load — it checks first, so it never
+ * re-runs the ALTER once the column is there.
+ */
+function ensure_testimonial_rating_column(mysqli $conn): void
+{
+    if (!column_exists($conn, "portfolio_testimonials", "Rating")) {
+        $conn->query("ALTER TABLE portfolio_testimonials ADD COLUMN Rating TINYINT UNSIGNED NOT NULL DEFAULT 5");
+    }
 }

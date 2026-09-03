@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2026 at 05:58 PM
+-- Generation Time: Sep 03, 2026 at 03:38 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -90,6 +90,26 @@ CREATE TABLE `portfolio_projects` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `portfolio_readme`
+--
+
+CREATE TABLE `portfolio_readme` (
+  `ReadmeID` int(11) NOT NULL,
+  `Heading` varchar(200) NOT NULL,
+  `Content` text NOT NULL,
+  `UpdatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `portfolio_readme`
+--
+
+INSERT INTO `portfolio_readme` (`ReadmeID`, `Heading`, `Content`, `UpdatedAt`) VALUES
+(1, 'About Noel', 'ABOUT ME\r\n\r\nMy name is Noel, and I am a Software Engineering student with a strong interest in technology, software development, and digital innovation.\r\n\r\nI am passionate about understanding how technology works and using it to create practical solutions to real-world problems. My interests include Web Development, Artificial Intelligence, Mobile Application Development, Cybersecurity, and emerging technologies.\r\n\r\nMY JOURNEY\r\n\r\nMy journey into software engineering started with curiosity about how websites, applications, and digital systems are built. That curiosity gradually developed into a desire to understand programming, databases, system design, and the different technologies that work together to create modern software.\r\n\r\nAs I continue my studies and practical training, I am focused on turning what I learn in the classroom into real projects and useful applications.\r\n\r\nWHAT I DO\r\n\r\nI am developing my skills in:\r\n\r\n• Web Development\r\n• Frontend Development\r\n• Backend Development\r\n• Database Management\r\n• Software Engineering\r\n• UI/UX Design\r\n• Artificial Intelligence\r\n• Mobile Application Development\r\n• Cybersecurity\r\n\r\nI enjoy working on projects that allow me to combine creativity, problem-solving, and technology.\r\n\r\nMY APPROACH\r\n\r\nI believe that good software should not only work, but should also be simple, useful, secure, and easy to understand.\r\n\r\nWhen working on a project, I focus on understanding the problem first, designing a practical solution, building it carefully, testing it, and continuously improving it.\r\n\r\nCURRENT FOCUS\r\n\r\nAt the moment, I am focused on strengthening my software engineering foundation through academic learning, practical projects, and internship experience.\r\n\r\nI am particularly interested in developing applications that solve real problems and can be useful to individuals, businesses, schools, and communities.\r\n\r\nMY GOALS\r\n\r\nMy long-term goal is to become a highly skilled software engineer capable of designing and building complete software systems.\r\n\r\nI want to continue exploring Artificial Intelligence, Mobile Development, Web Technologies, Cybersecurity, and other areas of modern computing.\r\n\r\nI also want to use technology to contribute to innovative projects and eventually build products and solutions of my own.\r\n\r\nBEYOND CODING\r\n\r\nFor me, software engineering is not only about writing code. It is about creativity, problem-solving, learning, experimentation, and continuous improvement.\r\n\r\nTechnology changes constantly, so I believe that one of the most important skills for a developer is the ability and willingness to keep learning.\r\n\r\nWHAT I CAN OFFER\r\n\r\nI bring curiosity, determination, creativity, and a willingness to learn to every project I work on.\r\n\r\nWhether it is developing a website, working with databases, designing a software system, or exploring a new technology, I am always interested in improving my skills and finding better ways to solve problems.\r\n\r\nLET\'S CONNECT\r\n\r\nI am always open to learning, collaborating, discussing technology, and working on interesting projects.\r\n\r\nIf you would like to connect, collaborate, or discuss a project, feel free to reach out through the contact section of this portfolio.\r\n\r\nThank you for taking the time to learn more about me.', '2026-09-03 01:33:13');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `portfolio_services`
 --
 
@@ -132,9 +152,9 @@ INSERT INTO `portfolio_settings` (`SettingID`, `SettingName`, `SettingValue`) VA
 (3, 'TypedRoles', 'Software Engineering Student, Web Developer, UI/UX Enthusiast, Tech Learner'),
 (4, 'AboutHeading', 'First-Year Software Engineering Student at CATUC Bamenda'),
 (5, 'AboutText', 'I\'m currently pursuing my HND in Software Engineering at the Catholic University of Cameroon (CATUC), Bamenda. I\'m passionate about technology, web development, and design. I enjoy turning complex problems into simple, beautiful, and functional solutions. I\'m constantly learning and exploring new tools and frameworks to grow as a developer.'),
-(6, 'ProfileImage', 'images/profile/1788275206_NOEL.jpg'),
-(7, 'AboutImage', 'images/about/1788275206_NOEL.jpg'),
-(8, 'CVLink', ''),
+(6, 'ProfileImage', 'images/uploads/img_6a978885e69788.75501101.jpg'),
+(7, 'AboutImage', 'images/uploads/img_6a978885e780c0.24751207.jpg'),
+(8, 'CVLink', 'files/Noel_CV.pdf'),
 (9, 'SocialLinkedIn', ''),
 (10, 'SocialGithub', ''),
 (11, 'SocialFacebook', ''),
@@ -266,7 +286,10 @@ INSERT INTO `portfolio_visits` (`VisitID`, `PageURL`, `IPAddress`, `UserAgent`, 
 (29, 'Home', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'http://localhost/portfolio/admin_login.php', '4mgrsng5jupk6r1r76lvicn840', '2026-09-01 13:23:44'),
 (30, 'Home', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'http://localhost/portfolio/admin_login.php', '4mgrsng5jupk6r1r76lvicn840', '2026-09-01 13:23:45'),
 (31, 'Home', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'http://localhost/portfolio/admin_login.php', '4mgrsng5jupk6r1r76lvicn840', '2026-09-01 13:23:52'),
-(32, 'Home', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'http://localhost/portfolio/admin_login.php', '4mgrsng5jupk6r1r76lvicn840', '2026-09-01 13:23:59');
+(32, 'Home', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', 'http://localhost/portfolio/admin_login.php', '4mgrsng5jupk6r1r76lvicn840', '2026-09-01 13:23:59'),
+(33, 'Home', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', '', 'e0g9eal6j2ah06uso0rbq64k6k', '2026-09-02 02:10:58'),
+(34, 'Home', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', '', 'm52jj5ho6591gfu1buv1c6arf3', '2026-09-02 17:08:19'),
+(35, 'Home', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36', '', 'm7rolq1qsn5oo4vtc6p85a8qbj', '2026-09-03 01:22:05');
 
 --
 -- Indexes for dumped tables
@@ -290,6 +313,12 @@ ALTER TABLE `portfolio_messages`
 --
 ALTER TABLE `portfolio_projects`
   ADD PRIMARY KEY (`ProjectID`);
+
+--
+-- Indexes for table `portfolio_readme`
+--
+ALTER TABLE `portfolio_readme`
+  ADD PRIMARY KEY (`ReadmeID`);
 
 --
 -- Indexes for table `portfolio_services`
@@ -352,6 +381,12 @@ ALTER TABLE `portfolio_projects`
   MODIFY `ProjectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `portfolio_readme`
+--
+ALTER TABLE `portfolio_readme`
+  MODIFY `ReadmeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `portfolio_services`
 --
 ALTER TABLE `portfolio_services`
@@ -361,7 +396,7 @@ ALTER TABLE `portfolio_services`
 -- AUTO_INCREMENT for table `portfolio_settings`
 --
 ALTER TABLE `portfolio_settings`
-  MODIFY `SettingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `SettingID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
 
 --
 -- AUTO_INCREMENT for table `portfolio_testimonials`
@@ -385,7 +420,7 @@ ALTER TABLE `portfolio_visitor_actions`
 -- AUTO_INCREMENT for table `portfolio_visits`
 --
 ALTER TABLE `portfolio_visits`
-  MODIFY `VisitID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `VisitID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
