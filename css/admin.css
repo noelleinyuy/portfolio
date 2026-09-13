@@ -549,7 +549,7 @@ the sidebar/topbar/card/table layout that style.css doesn't have.
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
     .admin-topbar {
         padding: 1.4rem 1.2rem;
     }
