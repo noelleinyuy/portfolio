@@ -80,6 +80,7 @@ $statusBadge = [
 
         <nav class="admin-nav">
             <a href="admin_dashboard.php"><i class="bx bx-grid-alt"></i> Dashboard</a>
+            <a href="admin_analytics.php"><i class="bx bx-line-chart"></i> Analytics</a>
             <a href="admin_testimonials.php"><i class="bx bx-chat"></i> Testimonials</a>
             <a href="admin_messages.php" class="active"><i class="bx bx-envelope"></i> Messages</a>
             <a href="admin_services.php"><i class="bx bx-briefcase"></i> Services</a>
