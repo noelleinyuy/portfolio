@@ -114,7 +114,7 @@ $statusBadge = [
 
             <div class="admin-panel">
                 <h2>Contact messages</h2>
-                <table class="admin-table">
+                <table class="admin-table admin-responsive-table">
                     <thead>
                         <tr>
                             <th>From</th>
@@ -135,18 +135,18 @@ $statusBadge = [
                                 $mailtoBody = rawurlencode($m["Reply"] ?: ("Hi " . $m["FullName"] . ",\n\n"));
                                 ?>
                                 <tr class="<?php echo $m["Status"] === "Unread" ? "row-unread" : ""; ?>">
-                                    <td>
+                                    <td data-label="From">
                                         <?php echo e($m["FullName"]); ?><br>
                                         <span class="muted"><?php echo e($m["Email"]); ?></span>
                                     </td>
-                                    <td><?php echo e($m["Phone"]); ?></td>
-                                    <td><?php echo e($m["Subject"]); ?></td>
-                                    <td class="truncate"><?php echo e($m["Message"]); ?></td>
-                                    <td>
+                                    <td data-label="Phone"><?php echo e($m["Phone"]); ?></td>
+                                    <td data-label="Subject"><?php echo e($m["Subject"]); ?></td>
+                                    <td class="truncate" data-label="Message"><?php echo e($m["Message"]); ?></td>
+                                    <td data-label="Status">
                                         <span class="badge <?php echo $badgeClass; ?>"><?php echo e($m["Status"]); ?></span>
                                     </td>
-                                    <td class="muted"><?php echo e(date("M j, g:ia", strtotime($m["CreatedAt"]))); ?></td>
-                                    <td class="row-actions">
+                                    <td class="muted" data-label="Received"><?php echo e(date("M j, g:ia", strtotime($m["CreatedAt"]))); ?></td>
+                                    <td class="row-actions" data-label="Actions">
 
                                         <?php if ($m["Status"] === "Unread"): ?>
                                             <form method="POST">

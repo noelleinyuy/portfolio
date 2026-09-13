@@ -177,7 +177,7 @@ $services = $conn->query("SELECT * FROM portfolio_services ORDER BY ServiceID DE
 
             <div class="admin-panel">
                 <h2>All services</h2>
-                <table class="admin-table">
+                <table class="admin-table admin-responsive-table">
                     <thead>
                         <tr>
                             <th>Icon</th>
@@ -192,16 +192,16 @@ $services = $conn->query("SELECT * FROM portfolio_services ORDER BY ServiceID DE
                         <?php if ($services && $services->num_rows > 0): ?>
                             <?php while ($s = $services->fetch_assoc()): ?>
                                 <tr>
-                                    <td><i class="<?php echo e($s["Icon"] ?: "bx bx-code"); ?>" style="font-size: 2rem; color: var(--main-color);"></i></td>
-                                    <td><?php echo e($s["Title"]); ?></td>
-                                    <td class="truncate"><?php echo e($s["Description"]); ?></td>
-                                    <td>
+                                    <td data-label="Icon"><i class="<?php echo e($s["Icon"] ?: "bx bx-code"); ?>" style="font-size: 2rem; color: var(--main-color);"></i></td>
+                                    <td data-label="Title"><?php echo e($s["Title"]); ?></td>
+                                    <td class="truncate" data-label="Description"><?php echo e($s["Description"]); ?></td>
+                                    <td data-label="Status">
                                         <span class="badge <?php echo $s["Status"] === "Visible" ? "badge-green" : "badge-gray"; ?>">
                                             <?php echo e($s["Status"]); ?>
                                         </span>
                                     </td>
-                                    <td class="muted"><?php echo e(date("M j, Y", strtotime($s["CreatedAt"]))); ?></td>
-                                    <td class="row-actions">
+                                    <td class="muted" data-label="Added"><?php echo e(date("M j, Y", strtotime($s["CreatedAt"]))); ?></td>
+                                    <td class="row-actions" data-label="Actions">
                                         <a href="admin_services.php?edit=<?php echo (int) $s["ServiceID"]; ?>" class="btn-small">Edit</a>
 
                                         <form method="POST">

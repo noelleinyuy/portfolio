@@ -121,14 +121,14 @@ $recentActions = $conn->query("
 
             <div class="admin-panel">
                 <h2>Top pages</h2>
-                <table class="admin-table">
+                <table class="admin-table admin-responsive-table">
                     <thead><tr><th>Page</th><th>Visits</th></tr></thead>
                     <tbody>
                         <?php if ($topPages && $topPages->num_rows > 0): ?>
                             <?php while ($p = $topPages->fetch_assoc()): ?>
                                 <tr>
-                                    <td><?php echo e($p["PageURL"]); ?></td>
-                                    <td><?php echo (int) $p["Visits"]; ?></td>
+                                    <td data-label="Page"><?php echo e($p["PageURL"]); ?></td>
+                                    <td data-label="Visits"><?php echo (int) $p["Visits"]; ?></td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
@@ -140,7 +140,7 @@ $recentActions = $conn->query("
 
             <div class="admin-panel">
                 <h2>Recent visits</h2>
-                <table class="admin-table">
+                <table class="admin-table admin-responsive-table">
                     <thead>
                         <tr>
                             <th>Page</th>
@@ -153,10 +153,10 @@ $recentActions = $conn->query("
                         <?php if ($recentVisits && $recentVisits->num_rows > 0): ?>
                             <?php while ($v = $recentVisits->fetch_assoc()): ?>
                                 <tr>
-                                    <td><?php echo e($v["PageURL"]); ?></td>
-                                    <td class="muted"><?php echo e($v["IPAddress"]); ?></td>
-                                    <td class="truncate muted"><?php echo e($v["Referrer"] ?: "Direct"); ?></td>
-                                    <td class="muted"><?php echo e(date("M j, g:ia", strtotime($v["VisitedAt"]))); ?></td>
+                                    <td data-label="Page"><?php echo e($v["PageURL"]); ?></td>
+                                    <td class="muted" data-label="IP address"><?php echo e($v["IPAddress"]); ?></td>
+                                    <td class="truncate muted" data-label="Referrer"><?php echo e($v["Referrer"] ?: "Direct"); ?></td>
+                                    <td class="muted" data-label="Visited"><?php echo e(date("M j, g:ia", strtotime($v["VisitedAt"]))); ?></td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
@@ -168,7 +168,7 @@ $recentActions = $conn->query("
 
             <div class="admin-panel">
                 <h2>Recent actions</h2>
-                <table class="admin-table">
+                <table class="admin-table admin-responsive-table">
                     <thead>
                         <tr>
                             <th>Action</th>
@@ -180,9 +180,9 @@ $recentActions = $conn->query("
                         <?php if ($recentActions && $recentActions->num_rows > 0): ?>
                             <?php while ($a = $recentActions->fetch_assoc()): ?>
                                 <tr>
-                                    <td><span class="badge badge-blue"><?php echo e($a["ActionType"]); ?></span></td>
-                                    <td><?php echo e($a["ActionDetail"]); ?></td>
-                                    <td class="muted"><?php echo e(date("M j, g:ia", strtotime($a["CreatedAt"]))); ?></td>
+                                    <td data-label="Action"><span class="badge badge-blue"><?php echo e($a["ActionType"]); ?></span></td>
+                                    <td data-label="Details"><?php echo e($a["ActionDetail"]); ?></td>
+                                    <td class="muted" data-label="Date"><?php echo e(date("M j, g:ia", strtotime($a["CreatedAt"]))); ?></td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>

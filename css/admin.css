@@ -111,6 +111,8 @@ the sidebar/topbar/card/table layout that style.css doesn't have.
 
     flex: 1;
 
+    min-width: 0;
+
     min-height: 100vh;
 }
 
@@ -170,6 +172,13 @@ the sidebar/topbar/card/table layout that style.css doesn't have.
 
 .admin-content {
     padding: 2.6rem;
+
+    /* Prevents any wide child (tables, long forms) from forcing this
+       container, and therefore the whole page, wider than the viewport. */
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 /* Stat cards */
@@ -232,6 +241,13 @@ the sidebar/topbar/card/table layout that style.css doesn't have.
     padding: 2rem;
 
     margin-bottom: 2.4rem;
+
+    /* Key fix: a wide table inside now scrolls within this box instead of
+       stretching the whole page and breaking mobile responsiveness. */
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow-x: auto;
 }
 
 .admin-panel h2 {
@@ -241,10 +257,55 @@ the sidebar/topbar/card/table layout that style.css doesn't have.
     color: var(--accent-color);
 }
 
+.panel-intro {
+    margin-bottom: 1.2rem;
+}
+
+.panel-note {
+    margin-bottom: 1.2rem;
+}
+
+.form-inline-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.inline-link {
+    margin-left: 1rem;
+}
+
+.image-preview {
+    max-width: 140px;
+    border-radius: 10px;
+    display: block;
+    margin-top: 0.8rem;
+}
+
+.image-preview-sm {
+    max-width: 90px;
+    border-radius: 8px;
+}
+
+.field-with-gap {
+    margin-top: 0.6rem;
+}
+
+.form-field-full {
+    width: 100%;
+}
+
+.service-icon {
+    font-size: 2rem;
+    color: var(--main-color);
+}
+
 /* Table */
 
 .admin-table {
     width: 100%;
+    min-width: 640px;
     border-collapse: collapse;
 }
 
@@ -257,6 +318,8 @@ the sidebar/topbar/card/table layout that style.css doesn't have.
     border-bottom: 1px solid var(--border-color);
 
     font-size: 1.4rem;
+
+    white-space: nowrap;
 }
 
 .admin-table th {
@@ -409,7 +472,12 @@ the sidebar/topbar/card/table layout that style.css doesn't have.
 }
 
 .admin-form input,
-.admin-form textarea {
+.admin-form textarea,
+.admin-form select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
     background: var(--input-bg);
     border: 0.15rem solid var(--border-color);
     color: var(--text-color);
@@ -429,6 +497,10 @@ the sidebar/topbar/card/table layout that style.css doesn't have.
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.1rem;
+}
+
+.form-row > div {
+    min-width: 0;
 }
 
 .btn-primary {
@@ -452,13 +524,121 @@ the sidebar/topbar/card/table layout that style.css doesn't have.
     .form-row {
         grid-template-columns: 1fr;
     }
+
+    .image-field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .row-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .row-actions > * {
+        width: 100%;
+    }
+
+    .form-inline-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .inline-link {
+        margin-left: 0;
+    }
 }
 
-/* Native <details>/<summary> reply widget on the Messages page */
+@media (max-width: 500px) {
+    .admin-topbar {
+        padding: 1.4rem 1.2rem;
+    }
+
+    .admin-topbar h1 {
+        font-size: 1.9rem;
+    }
+
+    .admin-user {
+        font-size: 1.2rem;
+    }
+
+    .admin-content {
+        padding: 1.2rem;
+    }
+
+    .admin-panel {
+        padding: 1.4rem;
+    }
+
+    .admin-responsive-table {
+        min-width: 0;
+    }
+
+    .admin-responsive-table thead {
+        display: none;
+    }
+
+    .admin-responsive-table,
+    .admin-responsive-table tbody,
+    .admin-responsive-table tr,
+    .admin-responsive-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .admin-responsive-table tr {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .admin-responsive-table tr:last-child {
+        border-bottom: none;
+    }
+
+    .admin-responsive-table td {
+        display: grid;
+        grid-template-columns: 7rem minmax(0, 1fr);
+        gap: 0.8rem;
+        padding: 0.8rem 0;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-responsive-table td::before {
+        content: attr(data-label);
+        color: var(--muted-text-color);
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .admin-responsive-table td.truncate {
+        max-width: none;
+        overflow: visible;
+        text-overflow: clip;
+    }
+
+    .admin-responsive-table td.row-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-responsive-table td.row-actions::before {
+        display: block;
+    }
+}
+
+/* Message actions should look like standard admin controls, not a diagram */
+
+details {
+    display: inline-block;
+}
 
 details > summary {
     list-style: none;
     display: inline-block;
+    cursor: pointer;
 }
 
 details > summary::-webkit-details-marker,
@@ -468,22 +648,27 @@ details > summary::marker {
 }
 
 details[open] > summary {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.4rem;
     border-color: var(--main-color);
     color: var(--main-color);
 }
 
 .reply-form {
-    background: var(--input-bg);
-    border: 0.15rem solid var(--border-color);
-    border-radius: 0.9rem;
-    padding: 1.2rem;
-    margin-top: 0.6rem;
-    min-width: 260px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin-top: 0.4rem;
+    min-width: 0;
 }
 
 .reply-form textarea {
     min-height: 7rem;
+    background: rgba(7, 18, 15, 0.8);
+    border: 0.15rem solid var(--border-color);
+    border-radius: 0.8rem;
+    color: var(--text-color);
+    padding: 1rem;
 }
 
 /* Simple CSS-only bar chart for the Analytics page */

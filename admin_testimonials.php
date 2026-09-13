@@ -230,7 +230,7 @@ $testimonials = $conn->query("SELECT * FROM portfolio_testimonials ORDER BY Test
 
                 <div class="admin-panel">
                     <h2>All testimonials</h2>
-                    <table class="admin-table">
+                    <table class="admin-table admin-responsive-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -247,20 +247,20 @@ $testimonials = $conn->query("SELECT * FROM portfolio_testimonials ORDER BY Test
                             <?php if ($testimonials && $testimonials->num_rows > 0): ?>
                                 <?php while ($t = $testimonials->fetch_assoc()): ?>
                                     <tr>
-                                        <td><?php echo e($t["Name"]); ?></td>
-                                        <td class="muted"><?php echo e($t["Email"]); ?></td>
-                                        <td><?php echo e($t["Role"]); ?></td>
-                                        <td><?php echo (int) ($t["Rating"] ?? 5); ?> / 5</td>
-                                        <td class="truncate"><?php echo e($t["Message"]); ?></td>
-                                        <td>
+                                        <td data-label="Name"><?php echo e($t["Name"]); ?></td>
+                                        <td class="muted" data-label="Email"><?php echo e($t["Email"]); ?></td>
+                                        <td data-label="Role"><?php echo e($t["Role"]); ?></td>
+                                        <td data-label="Rating"><?php echo (int) ($t["Rating"] ?? 5); ?> / 5</td>
+                                        <td class="truncate" data-label="Message"><?php echo e($t["Message"]); ?></td>
+                                        <td data-label="Status">
                                             <span class="badge <?php echo $t["Status"] === "Visible" ? "badge-green" : "badge-gray"; ?>">
                                                 <?php echo e($t["Status"]); ?>
                                             </span>
                                         </td>
                                         <?php if ($hasCreatedAt): ?>
-                                            <td class="muted"><?php echo e(date("M j, Y", strtotime($t["CreatedAt"]))); ?></td>
+                                            <td class="muted" data-label="Submitted"><?php echo e(date("M j, Y", strtotime($t["CreatedAt"]))); ?></td>
                                         <?php endif; ?>
-                                        <td class="row-actions">
+                                        <td class="row-actions" data-label="Actions">
                                             <a href="admin_testimonials.php?edit=<?php echo (int) $t["TestimonialID"]; ?>" class="btn-small">Edit</a>
 
                                             <form method="POST">

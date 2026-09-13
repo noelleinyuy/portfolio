@@ -132,7 +132,7 @@ $recentMessages = $conn->query("SELECT * FROM portfolio_messages ORDER BY $order
 
                 <div class="admin-panel">
                     <h2>Recent messages</h2>
-                    <table class="admin-table">
+                    <table class="admin-table admin-responsive-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -145,10 +145,10 @@ $recentMessages = $conn->query("SELECT * FROM portfolio_messages ORDER BY $order
                             <?php if ($recentMessages && $recentMessages->num_rows > 0): ?>
                                 <?php while ($m = $recentMessages->fetch_assoc()): ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($m["FullName"]); ?></td>
-                                        <td><?php echo htmlspecialchars($m["Email"]); ?></td>
-                                        <td><?php echo htmlspecialchars($m["Subject"] ?: "—"); ?></td>
-                                        <td><a href="admin_messages.php" class="btn-link">View all →</a></td>
+                                        <td data-label="Name"><?php echo htmlspecialchars($m["FullName"]); ?></td>
+                                        <td data-label="Email"><?php echo htmlspecialchars($m["Email"]); ?></td>
+                                        <td data-label="Subject"><?php echo htmlspecialchars($m["Subject"] ?: "—"); ?></td>
+                                        <td data-label="Action"><a href="admin_messages.php" class="btn-link">View all →</a></td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>

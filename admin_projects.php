@@ -190,7 +190,7 @@ $projects = $conn->query("SELECT * FROM portfolio_projects ORDER BY ProjectID DE
 
             <div class="admin-panel">
                 <h2>All projects</h2>
-                <table class="admin-table">
+                <table class="admin-table admin-responsive-table">
                     <thead>
                         <tr>
                             <th>Image</th>
@@ -204,19 +204,19 @@ $projects = $conn->query("SELECT * FROM portfolio_projects ORDER BY ProjectID DE
                         <?php if ($projects && $projects->num_rows > 0): ?>
                             <?php while ($p = $projects->fetch_assoc()): ?>
                                 <tr>
-                                    <td>
+                                    <td data-label="Image">
                                         <?php if (!empty($p["Image"])): ?>
                                             <img src="<?php echo e($p["Image"]); ?>" alt="<?php echo e($p["Title"]); ?>" style="max-width: 90px; border-radius: 8px;">
                                         <?php else: ?>
                                             <span class="muted">No image</span>
                                         <?php endif; ?>
                                     </td>
-                                    <td><?php echo e($p["Title"]); ?></td>
-                                    <td class="truncate"><?php echo e($p["Description"]); ?></td>
-                                    <td>
+                                    <td data-label="Title"><?php echo e($p["Title"]); ?></td>
+                                    <td class="truncate" data-label="Description"><?php echo e($p["Description"]); ?></td>
+                                    <td data-label="Status">
                                         <span class="badge <?php echo $p["Status"] === "Visible" ? "badge-green" : "badge-gray"; ?>"><?php echo e($p["Status"]); ?></span>
                                     </td>
-                                    <td class="row-actions">
+                                    <td class="row-actions" data-label="Actions">
                                         <a href="admin_projects.php?edit=<?php echo (int) $p["ProjectID"]; ?>" class="btn-small">Edit</a>
 
                                         <form method="POST">
